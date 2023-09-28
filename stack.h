@@ -18,7 +18,17 @@ struct Stack
     int nline;
     const char* filename;
     const char* func;
+    unsigned int hash_data;
+    unsigned int hash_structure;
     canary_t right_canary;
+};
+
+struct Location
+{
+    const char* name;
+    int nline;
+    const char* filename;
+    const char* func;
 };
 
 enum error
@@ -29,6 +39,8 @@ enum error
     ERROR_SIZE,
     ERROR_CAPACITY,
     ERROR_CANARY,
+    ERROR_HASH,
+    ERROR_VARIABLE,
     OK = 8
 };
 
@@ -40,11 +52,17 @@ enum error StackPush(struct Stack* stk, Elem_t value);
 
 enum error StackPop(struct Stack* stk, Elem_t* variable);
 
-void print_data(const Elem_t* data, const unsigned int capacity);
+enum error print_data(const Elem_t* data, const unsigned int capacity);
 
-unsigned int StackVerify(const struct Stack* stk);
+unsigned int StackVerify(struct Stack* stk);
 
 void StackDump(const struct Stack* stk, const char* filename, const unsigned int nstring, const char* func);
 
 void print_all_error(unsigned int all_error);
+
+enum error add_poison(Elem_t* data, const unsigned int sizze, const unsigned int capacity);
+
+unsigned int hash_function(const void* data, const unsigned int capacity);
+
+unsigned int size_stack(const unsigned int capacity);
 #endif
