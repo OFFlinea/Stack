@@ -151,23 +151,21 @@ void StackDump(const struct Stack* stk, const char* filename, const unsigned int
         printf("hash_structure = %d\n", stk->hash_structure);
         printf("hash_data = %d\n", stk->hash_data);
         printf("data[%p]\n", (stk->data) ? (canary_t*) stk->data - 1 : NULL);
-        if (stk->data) {
 
-            printf("\n\tleft_canary in data = %I64X\n", *(((canary_t*) stk->data) - 1));
-            printf("\tright_canary in data = %I64X\n\n", *((canary_t*)
-                (((char*) stk->data) + size_stack(stk->capacity))));
+        printf("\n\tleft_canary in data = %I64X\n", *(((canary_t*) stk->data) - 1));
+        printf("\tright_canary in data = %I64X\n\n", *((canary_t*)
+            (((char*) stk->data) + size_stack(stk->capacity))));
 
-            for (size_t elem = 0; elem < stk->capacity; elem++) {
+        for (size_t elem = 0; elem < stk->capacity; elem++) {
 
-                if (elem < stk->sizze) {
+            if (elem < stk->sizze) {
 
-                    printf("\t*[%d] = %d\n", elem, stk->data[elem]);
-                }
+                printf("\t*[%d] = %d\n", elem, stk->data[elem]);
+            }
 
-                else {
+            else {
 
-                    printf("\t [%d] = %d (POISON)\n", elem, stk->data[elem]);
-                }
+                printf("\t [%d] = %d (POISON)\n", elem, stk->data[elem]);
             }
         }
     }
