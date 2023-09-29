@@ -27,6 +27,19 @@ int main() {
         address[i] = '1';
     }
 
+    StackPop(&stk, &number);
+    printf("%d\n", number);
+
+    stk.sizze = 7;
+
+    stk.hash_structure = 0;
+    stk.hash_data = 0;
+    stk.hash_structure = hash_function(&stk, sizeof(struct Stack));
+
+    StackPop(&stk, &number);
+
+    printf("%d\n", number);
+
     print_data(stk.data, stk.sizze);
 
     address = ((char*) stk.data) + size_stack(stk.capacity);
@@ -43,6 +56,4 @@ int main() {
     printf("%d\n", number);
 
     StackDtor(&stk);
-
-    StackPush(&stk, 132);
 }

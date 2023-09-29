@@ -123,9 +123,14 @@ size_t StackVerify(struct Stack* stk) {
     stk->hash_structure = hash_function(stk, sizeof(struct Stack));
     stk->hash_data = hash_function(stk->data, size_stack(stk->capacity));
 
-    if (hash_structure != stk->hash_structure || hash_data != stk->hash_data) {
+    if (hash_data != stk->hash_data) {
 
-        all_error |= (size_t) pow(2, ERROR_HASH);
+        all_error |= (size_t) pow(2, ERROR_HASH_DATA);
+    }
+
+    if (hash_structure != stk->hash_structure) {
+
+        all_error |= (size_t) pow(2, ERROR_HASH_STRUCTURE);
     }
 
     return all_error;
@@ -208,9 +213,14 @@ void print_all_error(size_t all_error) {
                     printf("Сработала канарейка, кто-то пытается изменить данные\n");
                     break;
 
-                case ERROR_HASH:
+                case ERROR_HASH_DATA:
 
-                    printf("Изменился hash, кто-то меняет то, что менять нельзя\n");
+                    printf("Изменился hash стека, кто-то меняет то, что менять нельзя\n");
+                    break;
+
+                case ERROR_HASH_STRUCTURE:
+
+                    printf("Изменился hash структуры, кто-то меняет то, что менять нельзя\n");
                     break;
 
                 case NO_MEM:

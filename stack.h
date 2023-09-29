@@ -7,7 +7,6 @@ const canary_t CANARY_VALUE = 0xDEB;
 const Elem_t POISON = 123;
 
 #define STACK_CTOR(stack) StackCtor((stack), #stack, __LINE__, __FILE__, __func__);
-
 struct Stack
 {
     canary_t left_canary;
@@ -23,14 +22,6 @@ struct Stack
     canary_t right_canary;
 };
 
-struct Location
-{
-    const char* name;
-    int nline;
-    const char* filename;
-    const char* func;
-};
-
 enum error
 {
     STACK_EMPTY,
@@ -39,9 +30,10 @@ enum error
     ERROR_SIZE,
     ERROR_CAPACITY,
     ERROR_CANARY,
-    ERROR_HASH,
+    ERROR_HASH_DATA,
+    ERROR_HASH_STRUCTURE,
     ERROR_VARIABLE,
-    OK = 8
+    OK = 11
 };
 
 enum error StackCtor(struct Stack* stk, const char* name, const int nline, const char* filename, const char* func);
